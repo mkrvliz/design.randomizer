@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тема для макета</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F5F0E8;
+      --ink: #1A1410;
+      --accent: #C8401A;
+      --muted: #8A7F72;
+      --card-bg: #FDFAF5;
+      --border: #D6CEBD;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.5;
+    }
+
+    header {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .logo-main {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--ink);
+    }
+
+    .logo-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .counter {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .counter span {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* Main layout */
+    .wrapper {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    /* Eyebrow */
+    .eyebrow {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* Card */
+    .card {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 3rem 3.5rem;
+      position: relative;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      transition: opacity 0.15s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: -4px;
+      bottom: -4px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      z-index: -1;
+    }
+
+    .card.flash {
+      opacity: 0;
+    }
+
+    .card-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 5rem;
+      line-height: 1;
+      color: var(--border);
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      user-select: none;
+      transition: opacity 0.2s;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(200, 64, 26, 0.08);
+      border: 1px solid rgba(200, 64, 26, 0.2);
+      border-radius: 2px;
+      padding: 0.25rem 0.6rem;
+      width: fit-content;
+    }
+
+    .card-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.4rem;
+      line-height: 1.15;
+      color: var(--ink);
+      font-style: italic;
+    }
+
+    .card-context {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: #5A5248;
+      border-top: 1px solid var(--border);
+      padding-top: 1.2rem;
+    }
+
+    /* Button */
+    .btn {
+      position: relative;
+      background: var(--ink);
+      color: var(--bg);
+      border: none;
+      border-radius: 2px;
+      padding: 1rem 3rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.12s ease, background 0.15s ease;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      transform: translateY(100%);
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn:hover::after { transform: translateY(0); }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* History */
+    .history-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      width: 100%;
+      text-align: center;
+      margin-bottom: -1.5rem;
+    }
+
+    .history {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .history-item {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.2rem 0.55rem;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(4px);
+      animation: fadeUp 0.3s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .empty-arrow {
+      font-size: 2rem;
+      color: var(--border);
+      animation: bounce 1.8s ease-in-out infinite;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    .empty-text {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="logo-main">РАНДОМ</span>
+    <span class="logo-sub">/ Тема макета</span>
+  </header>
+
+  <div class="counter" id="counter" style="display:none">
+    Показано: <span id="countNum">0</span>
+  </div>
+
+  <div class="wrapper">
+    <p class="eyebrow">Генератор тем для практики</p>
+
+    <div class="card" id="card">
+      <div class="empty-state">
+        <span class="empty-arrow">↓</span>
+        <p class="empty-text">Нажми кнопку — получи тему</p>
+      </div>
+    </div>
+
+    <button class="btn" id="btn" onclick="getTheme()">
+      <span id="btnText">Выдать тему</span>
+    </button>
+
+    <div id="historyWrap" style="display:none; flex-direction:column; align-items:center; gap:0.8rem; width:100%">
+      <p class="history-label">Предыдущие</p>
+      <div class="history" id="history"></div>
+    </div>
+  </div>
+
+  <script>
+    const themes = [
+      {
+        tag: "Украшения",
+        title: "Ювелирная мастерская из переработанных металлов",
+        context: "Украшения ручной работы, созданные из вторсырья и найденных материалов. Каждое изделие — единственное в своём роде, с паспортом происхождения металла. Аудитория — осознанные покупатели, которым важна история вещи."
+      },
+      {
+        tag: "Одежда",
+        title: "Мерч для владельцев кошек",
+        context: "Лимитированные дропы футболок, свитшотов и аксессуаров с авторскими принтами — только кошки, никаких компромиссов. Сообщество вокруг бренда важнее, чем сам продукт."
+      },
+      {
+        tag: "Керамика",
+        title: "Студия посуды в японском ваби-саби стиле",
+        context: "Минималистичная керамика с нарочитыми несовершенствами — трещинки, потёки глазури, живой край. Продаётся небольшими коллекциями, каждая — вокруг одного цвета или текстуры."
+      },
+      {
+        tag: "Мероприятия",
+        title: "Поп-ап ужины в нестандартных локациях",
+        context: "Закрытые гастрономические вечера в заброшенных заводах, на крышах, в лесу. Меню меняется каждый раз. Места — секрет до последнего дня. Билеты расходятся за часы."
+      },
+      {
+        tag: "Одежда",
+        title: "Капсульный гардероб для цифровых кочевников",
+        context: "Одежда, которая выглядит как деловая и работает как техническая. 7 вещей — на любой климат и контекст. Основная боль клиента: чемодан не должен весить больше 10 кг."
+      },
+      {
+        tag: "Продукты",
+        title: "Крафтовый hot sauce от шеф-повара",
+        context: "Линейка острых соусов с ресторанным происхождением. Каждый вкус связан с конкретным блюдом или регионом. Упаковка — как у нишевого вина, не как у супермаркетного кетчупа."
+      },
+      {
+        tag: "Свечи",
+        title: "Свечи с запахами несуществующих мест",
+        context: "«Библиотека 1962», «После дождя в Токио», «Дача в июле» — каждый аромат рассказывает историю выдуманного или реального момента. Концепт — парфюмерия как машина времени."
+      },
+      {
+        tag: "Вечеринки",
+        title: "Клуб медленных танцев для взрослых",
+        context: "Ивент-проект для тех, кому за 25 и кто устал от клубной культуры. Медленная музыка, тусклый свет, никаких телефонов. Продаётся как «антидот от тревоги», не как вечеринка."
+      },
+      {
+        tag: "Украшения",
+        title: "Украшения с прессованными цветами",
+        context: "Кольца, серьги и подвески с настоящими засушенными цветами в смоле. Можно прислать свой цветок — из свадебного букета, с могилы бабушки — и получить украшение с памятью."
+      },
+      {
+        tag: "Одежда",
+        title: "Бренд рабочей одежды для художников",
+        context: "Фартуки, халаты, штаны с карманами — сшитые специально для тех, кто работает с красками, глиной, смолой. Функциональность уровня инструмента, но с эстетикой арт-студии."
+      },
+      {
+        tag: "Текстиль",
+        title: "Студия тканого декора ручного плетения",
+        context: "Макраме, гобелены, настенные панно — каждое изделие занимает от 3 до 30 дней работы. Мастер ведёт клиента от выбора цветовой палитры до установки на стену."
+      },
+      {
+        tag: "Мероприятия",
+        title: "Нон-стоп кинотеатр под открытым небом",
+        context: "Сезонный проект: показы с заката до рассвета в парке или на пустыре. Кресла-мешки, плоские экраны, программа составляется вокруг одной темы — например, «дорога» или «вода»."
+      },
+      {
+        tag: "Продукты",
+        title: "Подписка на дикоросы от собирателей",
+        context: "Ежемесячная коробка с дикими травами, грибами, ягодами от небольших хозяйств. Каждая посылка — из конкретного региона с картой локации сбора и рецептами от шефов."
+      },
+      {
+        tag: "Косметика",
+        title: "Уходовая косметика на основе пчелиных продуктов",
+        context: "Прополис, маточное молочко, пыльца — в минималистичной аптечной упаковке. Позиционирование: не «натуральное», а «активное» — клинические ингредиенты из улья."
+      },
+      {
+        tag: "Керамика",
+        title: "Керамические горшки для городских растений",
+        context: "Коллекции под конкретные виды: кактусы, монстеры, суккуленты. Дренажные системы встроены в дизайн. Клиент покупает «набор для вида», а не просто горшок."
+      },
+      {
+        tag: "Вечеринки",
+        title: "Квиз-клуб для профессионалов ниши",
+        context: "Регулярные интеллектуальные вечера с тематикой для узких аудиторий: архитекторы, повара, врачи. Нетворкинг через игру — без бизнес-карточек и презентаций."
+      },
+      {
+        tag: "Украшения",
+        title: "Гравировальная мастерская на монетах и находках",
+        context: "Украшения из старых монет, значков, артефактов с блошиных рынков. Клиент может принести свой предмет — мастер превратит его в кулон, кольцо или брошь."
+      },
+      {
+        tag: "Одежда",
+        title: "Кастомный мерч для маленьких кафе и баров",
+        context: "Студия, которая делает фирменный мерч только для независимых заведений. Тиражи от 20 штук, дизайн под концепт места, работа с печатью и вышивкой."
+      },
+      {
+        tag: "Текстиль",
+        title: "Постельное бельё с ботаническими принтами",
+        context: "Принты на основе сканов реальных растений из гербариев — каждый с названием и происхождением. Производство в маленьких тиражах, упор на натуральные ткани."
+      },
+      {
+        tag: "Мероприятия",
+        title: "Воркшоп по природному крашению ткани",
+        context: "Однодневные мастер-классы: чага, луковая шелуха, авокадо — всё, что красит. Участники уходят с покрашенным куском ткани и рецептами. Формат — вечеринка, не урок."
+      },
+      {
+        tag: "Продукты",
+        title: "Крафтовая паста ручной раскатки",
+        context: "Свежая паста с доставкой: сфольятелле, паппарделле, ньокки. Без заморозки — только на текущую неделю. Опционально — соусы и трюфельное масло из собственных рецептов."
+      },
+      {
+        tag: "Косметика",
+        title: "Шампунь-бар для жёсткой воды",
+        context: "Твёрдые шампуни, формула которых адаптирована под высокую жёсткость водопроводной воды. Проблема знакома почти всем — решение нишевое и конкретное."
+      },
+      {
+        tag: "Свечи",
+        title: "Свечи для ритуалов продуктивности",
+        context: "Аромат «начало работы», «глубокий фокус», «конец дня». Позиционирование — не медитация и не спа, а рабочий инструмент для тех, кто работает из дома."
+      },
+      {
+        tag: "Украшения",
+        title: "Бижутерия в стиле советского конструктивизма",
+        context: "Геометрические украшения, вдохновлённые плакатной эстетикой 20–30-х. Крупные формы, ограниченная палитра — чёрный, красный, золото. Продаётся как арт-объект."
+      },
+      {
+        tag: "Мероприятия",
+        title: "Йога-ретрит на одни сутки в городе",
+        context: "Не выезд в горы, а однодневный ретрит в арендованном пространстве в центре города. Для тех, кто не может уехать на неделю. Полная программа с едой, тишиной и практиками."
+      },
+      {
+        tag: "Одежда",
+        title: "Лимитированные коллаборации с художниками-самоучками",
+        context: "Бренд одежды, который раз в сезон делает капсулу с художником без институционального образования. Принты — с историей автора, часть выручки идёт ему напрямую."
+      },
+      {
+        tag: "Керамика",
+        title: "Сервиз как семейная реликвия на заказ",
+        context: "Керамический сервиз, создающийся специально под семью: с инициалами, цветами интерьера, любимыми формами. Срок — 3 месяца. Упаковка — как у ювелирного."
+      },
+      {
+        tag: "Продукты",
+        title: "Мороженое с нестандартными вкусами для взрослых",
+        context: "Мисо-карамель, чёрный кунжут, лаванда-горгонзола — вкусы, которых нет в супермаркете. Продаётся через поп-ап, доставку и небольшие кафе-партнёры."
+      },
+      {
+        tag: "Текстиль",
+        title: "Студия кастомной вышивки на готовой одежде",
+        context: "Клиент приносит или присылает вещь — мастер вышивает по индивидуальному эскизу. Вышивка как способ сохранить любимую вещь, а не купить новую."
+      },
+      {
+        tag: "Вечеринки",
+        title: "Закрытый книжный клуб с ужином",
+        context: "Ежемесячные встречи: одна книга, шесть человек, ужин в частном доме. Темы — только нон-фикшн. Ведущий меняется каждый раз. Формат — как интеллектуальный салон."
+      },
+      {
+        tag: "Косметика",
+        title: "Персонализированный парфюм по переписке",
+        context: "Парфюмер задаёт вопросы через анкету или чат, создаёт флакон под конкретного человека. Не «выбери нотки», а разговор о памяти, эмоциях и пространстве."
+      }
+    ];
+
+    let history = [];
+    let count = 0;
+    let usedIndices = [];
+
+    function getTheme() {
+      const card = document.getElementById('card');
+      card.classList.add('flash');
+
+      setTimeout(() => {
+        // Avoid recent repeats
+        let available = themes.map((_, i) => i).filter(i => !usedIndices.slice(-6).includes(i));
+        if (available.length === 0) { usedIndices = []; available = themes.map((_, i) => i); }
+
+        const idx = available[Math.floor(Math.random() * available.length)];
+        usedIndices.push(idx);
+        const theme = themes[idx];
+
+        count++;
+        document.getElementById('countNum').textContent = count;
+        document.getElementById('counter').style.display = 'block';
+
+        // Update card
+        card.innerHTML = `
+          <div class="card-number">${String(count).padStart(2, '0')}</div>
+          <div class="tag">${theme.tag}</div>
+          <h2 class="card-title">${theme.title}</h2>
+          <p class="card-context">${theme.context}</p>
+        `;
+
+        card.classList.remove('flash');
+
+        // Update button text
+        document.getElementById('btnText').textContent = 'Следующая тема';
+
+        // History (show last 5)
+        if (count > 1) {
+          history.unshift(themes[usedIndices[usedIndices.length - 2]].title);
+          if (history.length > 5) history.pop();
+
+          const wrap = document.getElementById('historyWrap');
+          wrap.style.display = 'flex';
+          const histEl = document.getElementById('history');
+          histEl.innerHTML = history.map((t, i) =>
+            `<span class="history-item" style="animation-delay:${i * 0.05}s">${t}</span>`
+          ).join('');
+        }
+      }, 150);
+    }
+  </script>
+</body>
+</html>
