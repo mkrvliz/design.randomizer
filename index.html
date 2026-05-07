@@ -6,7 +6,6 @@
   <title>Тема для макета</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,10 +14,10 @@
       --bg: #191919;
       --surface: #222222;
       --surface-hover: #2a2a2a;
-      --ink: #e6e6e6;
+      --ink: #F9F9F9;
       --ink-secondary: #999999;
       --ink-tertiary: #555555;
-      --accent: #ffffff;
+      --accent: #F9F9F9;
       --border: #333333;
       --border-light: #2e2e2e;
       --tag-bg: #2a2a2a;
@@ -27,7 +26,7 @@
     body {
       background: var(--bg);
       color: var(--ink);
-      font-family: 'Inter', sans-serif;
+      font-family: Helvetica, Arial, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -64,47 +63,22 @@
     }
 
     .logo-main {
-      font-family: 'Inter', sans-serif;
+      font-family: Helvetica, Arial, sans-serif;
       font-size: 0.85rem;
       font-weight: 500;
       color: var(--ink);
       letter-spacing: -0.01em;
     }
 
-    .counter {
-      position: fixed;
-      top: 1.6rem;
-      right: 1.75rem;
-      font-size: 0.75rem;
-      font-weight: 400;
-      color: var(--ink-tertiary);
-    }
-
-    .counter span {
-      color: var(--ink-secondary);
-    }
-
-    /* Main layout */
     .wrapper {
       width: 100%;
-      max-width: 620px;
+      max-width: 420px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1.25rem;
     }
 
-    /* Eyebrow
-    .eyebrow {
-      font-size: rem;
-      font-weight: 400;
-      color: var(--ink-tertiary);
-      text-align: center;
-      letter-spacing: 0.01em;
-    }
-       */
-
-    /* Card */
     .card {
       width: 100%;
       background: var(--surface);
@@ -112,7 +86,7 @@
       border-radius: 10px;
       padding: 2rem 2.25rem;
       position: relative;
-      min-height: 260px;
+      min-height: 100px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -125,7 +99,7 @@
     }
 
     .card-number {
-      font-family: 'Inter', sans-serif;
+      font-family: Helvetica, Arial, sans-serif;
       font-size: 0.7rem;
       font-weight: 400;
       color: var(--ink-tertiary);
@@ -150,11 +124,20 @@
     }
 
     .card-title {
-      font-family: 'Lora', serif;
+      font-family: Helvetica, Arial, sans-serif;
       font-size: 1.9rem;
       line-height: 1.25;
       color: var(--ink);
       font-weight: 400;
+    }
+
+    .card-brand {
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .card-context {
@@ -166,7 +149,6 @@
       padding-top: 1.1rem;
     }
 
-    /* Button */
     .btn {
       position: relative;
       background: var(--surface);
@@ -174,7 +156,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 0.65rem 1.5rem;
-      font-family: 'Inter', sans-serif;
+      font-family: Helvetica, Arial, sans-serif;
       font-size: 0.82rem;
       font-weight: 500;
       cursor: pointer;
@@ -194,49 +176,13 @@
       z-index: 1;
     }
 
-    /* History */
-    .history-label {
-      font-size: 0.7rem;
-      font-weight: 400;
-      color: var(--ink-tertiary);
-      width: 100%;
-      text-align: center;
-    }
-
-    .history {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .history-item {
-      font-size: 0.72rem;
-      font-weight: 400;
-      color: var(--ink-tertiary);
-      background: transparent;
-      border: 1px solid var(--border-light);
-      border-radius: 6px;
-      padding: 0.2rem 0.6rem;
-      white-space: nowrap;
-      opacity: 0;
-      transform: translateY(4px);
-      animation: fadeUp 0.3s ease forwards;
-    }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Empty state */
     .empty-state {
       text-align: center;
-      padding: 2rem;
+      padding: 0.5rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
 
     .empty-arrow {
@@ -252,10 +198,11 @@
     }
 
     .empty-text {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 2rem;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
       color: var(--ink-tertiary);
+      white-space: nowrap;
     }
   </style>
 </head>
@@ -270,15 +217,10 @@
         <rect x="7" y="7" width="4" height="4" rx="0.5"/>
       </svg>
     </div>
-    <span class="logo-main">Рандомайзер тем</span>
+    <span class="logo-main">Дизайн-рандомайзер</span>
   </header>
 
-  <div class="counter" id="counter" style="display:none">
-    Показано: <span id="countNum">0</span>
-  </div>
-
   <div class="wrapper">
-
     <div class="card" id="card">
       <div class="empty-state">
         <p class="empty-text">Нажми кнопку — получи тему</p>
@@ -289,67 +231,39 @@
     <button class="btn" id="btn" onclick="getTheme()">
       <span id="btnText">Выдать тему</span>
     </button>
-
-    <div id="historyWrap" style="display:none; flex-direction:column; align-items:center; gap:0.6rem; width:100%">
-      <p class="history-label">Предыдущие</p>
-      <div class="history" id="history"></div>
-    </div>
   </div>
 
   <script>
-    let history = [];
     let count = 0;
     let isLoading = false;
 
     async function getTheme() {
       if (isLoading) return;
-      
+
       const card = document.getElementById('card');
       card.classList.add('flash');
       isLoading = true;
 
       try {
-        const response = await fetch('http://localhost:3000/api/theme');
-        if (!response.ok) {
-          throw new Error('Failed to fetch theme');
-        }
+        const response = await fetch('/api/theme');
+        if (!response.ok) throw new Error('Failed to fetch theme');
         const theme = await response.json();
 
         setTimeout(() => {
           count++;
-          document.getElementById('countNum').textContent = count;
-          document.getElementById('counter').style.display = 'block';
 
-          // Update card
+          const title = theme.title.charAt(0).toUpperCase() + theme.title.slice(1);
           card.innerHTML = `
-            <div class="card-number">${String(count).padStart(2, '0')}</div>
-            <div class="tag">${theme.tag}</div>
-            <h2 class="card-title">${theme.title}</h2>
+            <div class="card-brand">${theme.brand}</div>
+            <h2 class="card-title">${title}</h2>
             <p class="card-context">${theme.context}</p>
           `;
 
           card.classList.remove('flash');
-
-          // Update button text
           document.getElementById('btnText').textContent = 'Следующая тема';
-
-          // History (show last 5)
-          if (count > 1) {
-            history.unshift(theme.title);
-            if (history.length > 5) history.pop();
-
-            const wrap = document.getElementById('historyWrap');
-            wrap.style.display = 'flex';
-            const histEl = document.getElementById('history');
-            histEl.innerHTML = history.map((t, i) =>
-              `<span class="history-item" style="animation-delay:${i * 0.05}s">${t}</span>`
-            ).join('');
-          }
-
           isLoading = false;
         }, 150);
       } catch (error) {
-        console.error('Error:', error);
         card.innerHTML = `
           <div class="empty-state">
             <p class="empty-text" style="color: #ff6b6b;">Ошибка подключения к серверу</p>
