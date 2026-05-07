@@ -313,10 +313,11 @@
 
       setTimeout(() => {
         const title = theme.title.charAt(0).toUpperCase() + theme.title.slice(1);
+        const context = theme.context.charAt(0).toUpperCase() + theme.context.slice(1);
         card.innerHTML = `
           <div class="card-brand">${theme.brand}</div>
           <h2 class="card-title">${title}</h2>
-          <p class="card-context">${theme.context}</p>
+          <p class="card-context">${context}</p>
         `;
         card.classList.remove('flash');
         document.getElementById('btnText').textContent = 'Следующая тема';
