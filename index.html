@@ -358,6 +358,12 @@
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 
+    const SHORT_WORDS = 'а|и|но|да|или|либо|в|во|на|над|под|за|у|к|ко|о|об|обо|от|по|до|из|изо|без|для|про|при|с|со|не|ни|же|ли|бы|то|как|что';
+    const HANG_RE = new RegExp(`(^|[\\s(«"'—–-])(${SHORT_WORDS})\\s`, 'gi');
+    function nobr(text) {
+      return text.replace(HANG_RE, '$1$2 ');
+    }
+
     const themes = [
       { brand: "Глина & Утро", title: "посуда с текстурой природных материалов", context: "миски, кружки и вазы с оттисками листьев, коры и мха — каждый предмет сохраняет след живой природы. Небольшая мастерская с открытыми мастер-классами по выходным. Идеально для подарков и уютного интерьера.", palette: ["#8B6F47", "#C9B79C", "#4A3F35"] },
       { brand: "Тёплый круг", title: "кружки и чайники ручной работы", context: "семейная мастерская из двух человек, делает посуду малыми сериями по 20–30 штук. Сотрудничает с локальными спешелти-кофейнями — поставляет фирменные кружки под их меню. Глазури разрабатываются с нуля, у каждой коллекции свой характер.", palette: ["#A9714B", "#E8D4B8", "#5C3D2E"] },
@@ -428,8 +434,9 @@
       isLoading = true;
 
       setTimeout(() => {
-        const title = theme.title.charAt(0).toUpperCase() + theme.title.slice(1);
-        const context = theme.context.charAt(0).toUpperCase() + theme.context.slice(1);
+        const title = nobr(theme.title.charAt(0).toUpperCase() + theme.title.slice(1));
+        const context = nobr(theme.context.charAt(0).toUpperCase() + theme.context.slice(1));
+        const brand = nobr(theme.brand);
         const swatches = theme.palette.map(hex => `
           <div class="swatch">
             <div class="swatch-color" style="background:${hex}"></div>
@@ -437,7 +444,7 @@
           </div>
         `).join('');
         card.innerHTML = `
-          <div class="card-brand">${theme.brand}</div>
+          <div class="card-brand">${brand}</div>
           <h2 class="card-title">${title}</h2>
           <p class="card-context">${context}</p>
           <div class="palette">${swatches}</div>
