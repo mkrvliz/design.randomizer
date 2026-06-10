@@ -1,7 +1,7 @@
 {
-  "name": "topic-randomizer",
+  "name": "design.randomizer",
   "version": "1.0.0",
-  "description": "Theme randomizer with Yandex GPT integration",
+  "description": "Random design briefs for practice: brand, niche, context, and a three-color palette.",
   "type": "module",
   "main": "server.js",
   "scripts": {
